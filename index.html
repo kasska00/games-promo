@@ -197,6 +197,19 @@
     </div>
 
     <script>
+        // База данных кодов прямо на сайте — работает без интернета и внешних API!
+        const localGamesDatabase = {
+            genshin: [
+                { code: "GENSHINGIFT", reward: "60 Примогемов и 5 книжек опыта (Вечный код)" },
+                { code: "CA3BLB7F2S23", reward: "60 Примогемов и 5 единиц опыта искателя приключений" },
+                { code: "OLALALAND", reward: "10 000 Моры, 5 превосходной руды усиления" }
+            ],
+            honkai: [
+                { code: "STARRAILGIFT", reward: "50 Звездного нефрита и 10 000 кредитов (Вечный код)" },
+                { code: "HSR10YEARS", reward: "100 Звездного нефрита в честь годовщины" }
+            ]
+        };
+
         // Функция переключения меню
         function changeMenuSection(sectionId) {
             let views = document.querySelectorAll('.block-view');
@@ -210,11 +223,35 @@
                 event.currentTarget.classList.add('active');
             }
 
-            if (sectionId === 'genshin') {
-                loadServerGiftCodes('genshin', 'genshin-data-loading-box');
-            } else if (sectionId === 'honkai') {
-                loadServerGiftCodes('hkrpg', 'honkai-data-loading-box');
+            // Загружаем сохраненные коды для Hoyoverse игр
+            if (sectionId === 'genshin' || sectionId === 'honkai') {
+                renderStaticGameCodes(sectionId);
             }
+        }
+
+        // Вывод кодов на экран
+        function renderStaticGameCodes(gameType) {
+            const boxId = gameType === 'genshin' ? 'genshin-data-loading-box' : 'honkai-data-loading-box';
+            const displayBox = document.getElementById(boxId);
+            displayBox.innerHTML = ''; // Очищаем поле
+
+            const currentCodes = localGamesDatabase[gameType];
+
+            currentCodes.forEach(item => {
+                const itemRow = document.createElement('div');
+                itemRow.className = 'promo-list-row';
+                itemRow.innerHTML = `
+                    <div>
+                        <h4>${item.code}</h4>
+                        <p>${item.reward}</p>
+                    </div>
+                    <div class="action-zone">
+                        <div class="coupon-code-text">${item.code}</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('${item.code}', this)">Копировать</button>
+                    </div>
+                `;
+                displayBox.appendChild(itemRow);
+            });
         }
 
         // Логика кнопки копирования
@@ -233,49 +270,6 @@
             }).catch(err => {
                 console.error('Ошибка копирования: ', err);
             });
-        }
-
-        // Асинхронный автопилот для Hoyoverse
-        async function loadServerGiftCodes(gameAlias, boxId) {
-            const displayBox = document.getElementById(boxId);
-            displayBox.innerHTML = '<div class="info-status-text">Загрузка актуальных промокодов с сервера...</div>';
-
-            try {
-                const webResponse = await fetch(`https://hoyo-codes.seria.moe/codes?game=${gameAlias}`);
-                if (!webResponse.ok) throw new Error('Network error');
-                
-                const serverData = await webResponse.json();
-                const validCodes = serverData.codes.filter(c => c.status === 'OK');
-
-                if (validCodes.length === 0) {
-                    displayBox.innerHTML = '<div class="info-status-text">На сегодня активных промокодов не найдено.</div>';
-                    return;
-                }
-
-                displayBox.innerHTML = '';
-
-                validCodes.forEach(item => {
-                    const prizeDescription = item.reward_ru || item.reward_en || "Бонусы и подарки при активации";
-                    
-                    const itemRow = document.createElement('div');
-                    itemRow.className = 'promo-list-row';
-                    itemRow.innerHTML = `
-                        <div>
-                            <h4>${item.code}</h4>
-                            <p>${prizeDescription}</p>
-                        </div>
-                        <div class="action-zone">
-                            <div class="coupon-code-text">${item.code}</div>
-                            <button class="click-to-copy" onclick="runCopyProcess('${item.code}', this)">Копировать</button>
-                        </div>
-                    `;
-                    displayBox.appendChild(itemRow);
-                });
-
-            } catch (failReason) {
-                console.error(failReason);
-                displayBox.innerHTML = '<div class="info-status-text" style="color: #ff4a4a;">Не удалось обновить коды автоматически. Попробуйте обновить страницу.</div>';
-            }
         }
     </script>
 </body>
