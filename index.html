@@ -3,35 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMER-BONUS — Актуальные промокоды и халява для игр (2026)</title>
+    <title>GAMER-BONUS — Актуальные промокоды для игр (2026)</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #141414;
             color: #fff;
             margin: 0;
             padding: 20px;
         }
-        header {
-            text-align: center;
-            padding: 30px 0;
-        }
+        header { text-align: center; padding: 30px 0; }
         h1 { color: #00ff66; margin-bottom: 5px; }
         header p { color: #aaa; margin: 0; }
+        .container { max-width: 800px; margin: 0 auto; }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .tabs {
+        /* Кнопки переключения */
+        .navigation-panel {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-        .tab-btn {
+        .nav-link-item {
             background-color: #222;
             color: #fff;
             border: 2px solid #333;
@@ -41,17 +35,17 @@
             font-weight: bold;
             transition: 0.2s;
         }
-        .tab-btn:hover { border-color: #00ff66; }
-        .tab-btn.active {
+        .nav-link-item:hover { border-color: #00ff66; }
+        .nav-link-item.active {
             background-color: #00ff66;
             color: #141414;
             border-color: #00ff66;
         }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .block-view { display: none; }
+        .block-view.active { display: block; }
 
-        .game-block {
+        .game-card-box {
             background-color: #1e1e1e;
             border-radius: 12px;
             padding: 25px;
@@ -59,8 +53,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
             border: 1px solid #2d2d2d;
         }
-        
-        .game-title {
+        .game-card-header {
             font-size: 24px;
             font-weight: bold;
             color: #fff;
@@ -71,8 +64,7 @@
             border-bottom: 2px solid #2d2d2d;
             padding-bottom: 10px;
         }
-        
-        .game-title .btn-link {
+        .game-card-header .go-to-url {
             background-color: #00ff66;
             color: #141414;
             text-decoration: none;
@@ -80,40 +72,29 @@
             border-radius: 6px;
             font-size: 14px;
             font-weight: bold;
-            transition: 0.2s;
         }
-        .game-title .btn-link:hover { background-color: #00cc52; }
 
-        .promo-row {
+        .promo-list-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid #2d2d2d;
         }
-        .promo-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .promo-list-row:last-child { border-bottom: none; }
+        .promo-list-row h4 { margin: 0 0 5px 0; color: #00ff66; font-size: 16px; }
+        .promo-list-row p { margin: 0; color: #aaa; font-size: 14px; }
         
-        .promo-info h4 { margin: 0 0 5px 0; color: #00ff66; font-size: 16px; }
-        .promo-info p { margin: 0; color: #aaa; font-size: 14px; }
-        
-        .code-action {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .code {
+        .action-zone { display: flex; align-items: center; gap: 10px; }
+        .coupon-code-text {
             background: #2a2a2a;
             padding: 8px 14px;
             border-radius: 6px;
             font-weight: bold;
             color: #00ff66;
             border: 1px dashed #00ff66;
-            letter-spacing: 1px;
-            font-size: 15px;
         }
-
-        .copy-btn {
+        .click-to-copy {
             background-color: #333;
             color: #fff;
             border: 1px solid #444;
@@ -121,17 +102,14 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 13px;
-            transition: 0.2s;
         }
-        .copy-btn:hover { background-color: #00ff66; color: #141414; }
-        
-        .loading { text-align: center; color: #aaa; font-style: italic; padding: 20px; }
+        .click-to-copy:hover { background-color: #00ff66; color: #141414; }
+        .info-status-text { text-align: center; color: #aaa; font-style: italic; padding: 20px; }
 
         @media (max-width: 600px) {
-            .game-title { flex-direction: column; gap: 10px; text-align: center; }
-            .promo-row { flex-direction: column; text-align: center; gap: 10px; }
-            .code-action { flex-direction: column; width: 100%; }
+            .game-card-header { flex-direction: column; gap: 10px; text-align: center; }
+            .promo-list-row { flex-direction: column; text-align: center; gap: 10px; }
+            .action-zone { flex-direction: column; width: 100%; }
         }
     </style>
 </head>
@@ -143,198 +121,162 @@
     </header>
 
     <div class="container">
-
-        <!-- КНОПКИ ДЛЯ ВЫБОРА ИГРЫ -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab('cs2')">CS2 Кейсы</button>
-            <button class="tab-btn" onclick="openTab('roblox')">Roblox</button>
-            <button class="tab-btn" onclick="openTab('genshin')">Genshin Impact</button>
-            <button class="tab-btn" onclick="openTab('honkai')">Honkai: Star Rail</button>
+        <!-- Кнопки меню -->
+        <div class="navigation-panel">
+            <button class="nav-link-item active" onclick="changeMenuSection('cs2')">CS2 Кейсы</button>
+            <button class="nav-link-item" onclick="changeMenuSection('roblox')">Roblox</button>
+            <button class="nav-link-item" onclick="changeMenuSection('genshin')">Genshin Impact</button>
+            <button class="nav-link-item" onclick="changeMenuSection('honkai')">Honkai: Star Rail</button>
         </div>
 
-        <!-- РАЗДЕЛ: CS2 -->
-        <div id="cs2" class="tab-content active">
-            <div class="game-block">
-                <div class="game-title">
+        <!-- CS2 -->
+        <div id="cs2" class="block-view active">
+            <div class="game-card-box">
+                <div class="game-header-title game-card-header">
                     <span>🔥 Сайт: CSFAIL</span>
-                    <a href="ТВОЯ_РЕФ_ССЫЛКА" target="_blank" class="btn-link">Перейти на сайт →</a>
+                    <a href="#" target="_blank" class="go-to-url">Перейти на сайт →</a>
                 </div>
-                <div class="promo-row">
-                    <div class="promo-info">
+                <div class="promo-list-row">
+                    <div>
                         <h4>Бонус +15% к депу</h4>
                         <p>Увеличивает баланс при любом пополнении счета</p>
                     </div>
-                    <div class="code-action">
-                        <div class="code">CS2BONUS</div>
-                        <button class="copy-btn" onclick="copyText('CS2BONUS', this)">Копировать</button>
+                    <div class="action-zone">
+                        <div class="coupon-code-text">CS2BONUS</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('CS2BONUS', this)">Копировать</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- РАЗДЕЛ: ROBLOX (Сюда можешь пихать сколько угодно плейсов отдельно!) -->
-        <div id="roblox" class="tab-content">
-            <!-- Блок 1: Blade Ball -->
-            <div class="game-block">
-                <div class="game-title">
+        <!-- ROBLOX -->
+        <div id="roblox" class="block-view">
+            <div class="game-card-box">
+                <div class="game-header-title game-card-header">
                     <span>⚔️ Плейс: Blade Ball</span>
-                    <a href="https://www.roblox.com/games/13772394625/Blade-Ball" target="_blank" class="btn-link">Открыть плейс →</a>
+                    <a href="https://www.roblox.com/games/13772394625/Blade-Ball" target="_blank" class="go-to-url">Открыть плейс →</a>
                 </div>
-                <div class="promo-row">
-                    <div class="promo-info">
+                <div class="promo-list-row">
+                    <div>
                         <h4>Бесплатный меч и монеты</h4>
                         <p>Дает уникальный скин на оружие и 200 монет в режиме</p>
                     </div>
-                    <div class="code-action">
-                        <div class="code">BALLDROP</div>
-                        <button class="copy-btn" onclick="copyText('BALLDROP', this)">Копировать</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Блок 2: Blox Fruits -->
-            <div class="game-block">
-                <div class="game-title">
-                    <span>🍇 Плейс: Blox Fruits</span>
-                    <a href="https://www.roblox.com/games/2753915549/Blox-Fruits" target="_blank" class="btn-link">Открыть плейс →</a>
-                </div>
-                <div class="promo-row">
-                    <div class="promo-info">
-                        <h4>2x Опыт (20 минут)</h4>
-                        <p>Удваивает получаемый опыт для быстрой прокачки</p>
-                    </div>
-                    <div class="code-action">
-                        <div class="code">KITTGAMING</div>
-                        <button class="copy-btn" onclick="copyText('KITTGAMING', this)">Копировать</button>
+                    <div class="action-zone">
+                        <div class="coupon-code-text">BALLDROP</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('BALLDROP', this)">Копировать</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- РАЗДЕЛ: GENSHIN (Автопилот) -->
-        <div id="genshin" class="tab-content">
-            <div class="game-block">
-                <div class="game-title">
-                    <span>💎 Genshin Impact (Авто-обновление)</span>
-                    <a href="https://genshin.hoyoverse.com/ru/gift" target="_blank" class="btn-link">Сайт активации →</a>
+        <!-- GENSHIN -->
+        <div id="genshin" class="block-view">
+            <div class="game-card-box">
+                <div class="game-header-title game-card-header">
+                    <span>💎 Genshin Impact</span>
+                    <a href="https://genshin.hoyoverse.com/ru/gift" target="_blank" class="go-to-url">Сайт активации →</a>
                 </div>
-                <div id="genshin-dynamic-root">
-                    <div class="loading">Загрузка актуальных промокодов...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- РАЗДЕЛ: HONKAI (Автопилот) -->
-        <div id="honkai" class="tab-content">
-            <div class="game-block">
-                <div class="game-title">
-                    <span>🌌 Honkai: Star Rail (Авто-обновление)</span>
-                    <a href="https://hsr.hoyoverse.com/gift" target="_blank" class="btn-link">Сайт активации →</a>
-                </div>
-                <div id="honkai-dynamic-root">
-                    <div class="loading">Загрузка актуальных промокодов...</div>
+                <div id="genshin-data-loading-box">
+                    <div class="info-status-text">Загрузка актуальных промокодов...</div>
                 </div>
             </div>
         </div>
 
+        <!-- HONKAI -->
+        <div id="honkai" class="block-view">
+            <div class="game-card-box">
+                <div class="game-header-title game-card-header">
+                    <span>🌌 Honkai: Star Rail</span>
+                    <a href="https://hsr.hoyoverse.com/gift" target="_blank" class="go-to-url">Сайт активации →</a>
+                </div>
+                <div id="honkai-data-loading-box">
+                    <div class="info-status-text">Загрузка актуальных промокодов...</div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <script>
-        // Функция переключения вкладок
-        function openTab(tabId) {
-            // Скрываем все блоки с контентом
-            let contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+        // Функция переключения меню
+        function changeMenuSection(sectionId) {
+            let views = document.querySelectorAll('.block-view');
+            views.forEach(v => v.classList.remove('active'));
             
-            // Убираем активный статус у кнопок
-            let buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            let items = document.querySelectorAll('.nav-link-item');
+            items.forEach(i => i.classList.remove('active'));
             
-            // Активируем нужную вкладку и кнопку
-            document.getElementById(tabId).classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
             if (event && event.currentTarget) {
                 event.currentTarget.classList.add('active');
             }
 
-            // Если выбрали динамические вкладки Hoyoverse — запускаем автопилот
-            if (tabId === 'genshin') {
-                fetchHoyoCodes('genshin', 'genshin-dynamic-root');
-            } else if (tabId === 'honkai') {
-                fetchHoyoCodes('hkrpg', 'honkai-dynamic-root');
+            if (sectionId === 'genshin') {
+                loadServerGiftCodes('genshin', 'genshin-data-loading-box');
+            } else if (sectionId === 'honkai') {
+                loadServerGiftCodes('hkrpg', 'honkai-data-loading-box');
             }
         }
 
-        // КНОПКА КОПИРОВАНИЯ (с красивым визуальным эффектом)
-        function copyText(text, buttonElement) {
-            navigator.clipboard.writeText(text).then(() => {
-                let originalText = buttonElement.innerText;
-                buttonElement.innerText = 'Скопировано! ✓';
-                buttonElement.style.backgroundColor = '#00ff66';
-                buttonElement.style.color = '#141414';
+        // Логика кнопки копирования
+        function runCopyProcess(textValue, element) {
+            navigator.clipboard.writeText(textValue).then(() => {
+                let prevText = element.innerText;
+                element.innerText = 'Скопировано! ✓';
+                element.style.backgroundColor = '#00ff66';
+                element.style.color = '#141414';
                 
                 setTimeout(() => {
-                    buttonElement.innerText = originalText;
-                    buttonElement.style.backgroundColor = '#333';
-                    buttonElement.style.color = '#fff';
+                    element.innerText = prevText;
+                    element.style.backgroundColor = '#333';
+                    element.style.color = '#fff';
                 }, 2000);
             }).catch(err => {
-                console.error('Не удалось скопировать: ', err);
+                console.error('Ошибка копирования: ', err);
             });
         }
 
-        // АВТОПИЛОТ: Сбор кодов с живого сервера API
-        async function fetchHoyoCodes(gameKey, containerId) {
-            const rootContainer = document.getElementById(containerId);
-            rootContainer.innerHTML = '<div class="loading">Загрузка актуальных промокодов с сервера...</div>';
+        // Асинхронный автопилот для Hoyoverse
+        async function loadServerGiftCodes(gameAlias, boxId) {
+            const displayBox = document.getElementById(boxId);
+            displayBox.innerHTML = '<div class="info-status-text">Загрузка актуальных промокодов с сервера...</div>';
 
             try {
-                // Подключаемся к открытому и обновляемому круглосуточно API кодов
-                const response = await fetch(`https://hoyo-codes.seria.moe/codes?game=${gameKey}`);
-                if (!response.ok) throw new Error('Ошибка сети');
+                const webResponse = await fetch(`https://hoyo-codes.seria.moe/codes?game=${gameAlias}`);
+                if (!webResponse.ok) throw new Error('Network error');
                 
-                const data = await response.json();
-                
-                // Фильтруем только активные на сегодня коды
-                const activeCodes = data.codes.filter(item => item.status === 'OK');
+                const serverData = await webResponse.json();
+                const validCodes = serverData.codes.filter(c => c.status === 'OK');
 
-                if (activeCodes.length === 0) {
-                    rootContainer.innerHTML = '<div class="loading">На сегодня активных промокодов не найдено.</div>';
+                if (validCodes.length === 0) {
+                    displayBox.innerHTML = '<div class="info-status-text">На сегодня активных промокодов не найдено.</div>';
                     return;
                 }
 
-                rootContainer.innerHTML = ''; // Очищаем текст загрузки
+                displayBox.innerHTML = '';
 
-                // Генерируем строки под каждый полученный код
-                activeCodes.forEach(promo => {
-                    const rewardText = promo.reward_ru || promo.reward_en || "Награды и бонусы при активации";
+                validCodes.forEach(item => {
+                    const prizeDescription = item.reward_ru || item.reward_en || "Бонусы и подарки при активации";
                     
-                    const row = document.createElement('div');
-                    row.className = 'promo-row';
-                    row.innerHTML = `
-                        <div class="promo-info">
-                            <h4>${promo.code}</h4>
-                            <p>${rewardText}</p>
+                    const itemRow = document.createElement('div');
+                    itemRow.className = 'promo-list-row';
+                    itemRow.innerHTML = `
+                        <div>
+                            <h4>${item.code}</h4>
+                            <p>${prizeDescription}</p>
                         </div>
-                        <div class="code-action">
-                            <div class="code">${promo.code}</div>
-                            <button class="copy-btn" onclick="copyText('${promo.code}', this)">Копировать</button>
+                        <div class="action-zone">
+                            <div class="coupon-code-text">${item.code}</div>
+                            <button class="click-to-copy" onclick="runCopyProcess('${item.code}', this)">Копировать</button>
                         </div>
                     `;
-                    rootContainer.appendChild(row);
+                    displayBox.appendChild(itemRow);
                 });
 
-            } catch (error) {
-                console.error(error);
-                rootContainer.innerHTML = '<div class="loading" style="color: #ff4a4a;">Не удалось обновить коды автоматически. Сервер временно недоступен.</div>';
+            } catch (failReason) {
+                console.error(failReason);
+                displayBox.innerHTML = '<div class="info-status-text" style="color: #ff4a4a;">Не удалось обновить коды автоматически. Попробуйте обновить страницу.</div>';
             }
         }
-
-        // Первичный запуск скрипта (чтобы сайт не был пустым при первом заходе)
-        document.addEventListener("DOMContentLoaded", function() {
-            // Так как первая вкладка при старте — CS2, кодовHoyoverse загружать сразу не нужно.
-            // Но если захочешь сделать Genshin первой вкладкой, раскомментируй строку ниже:
-            // fetchHoyoCodes('genshin', 'genshin-dynamic-root');
-        });
     </script>
-
 </body>
 </html>
