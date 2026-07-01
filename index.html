@@ -156,16 +156,55 @@
                     <span>⚔️ Плейс: Blade Ball</span>
                     <a href="https://www.roblox.com/games/13772394625/Blade-Ball" target="_blank" class="go-to-url">Открыть плейс →</a>
                 </div>
+
+                <!-- Код 1 -->
                 <div class="promo-list-row">
                     <div>
-                        <h4>Бесплатный меч и монеты</h4>
-                        <p>Дает уникальный скин на оружие и 200 монет в режиме</p>
+                        <h4>5BVISITS</h4>
+                        <p>Эксклюзивные награды внутри режима</p>
                     </div>
                     <div class="action-zone">
-                        <div class="coupon-code-text">BALLDROP</div>
-                        <button class="click-to-copy" onclick="runCopyProcess('BALLDROP', this)">Копировать</button>
+                        <div class="coupon-code-text">5BVISITS</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('5BVISITS', this)">Копировать</button>
                     </div>
                 </div>
+
+                <!-- Код 2 -->
+                <div class="promo-list-row">
+                    <div>
+                        <h4>RAMADAN</h4>
+                        <p>1 Бесплатный спин (прокрутка колеса)</p>
+                    </div>
+                    <div class="action-zone">
+                        <div class="coupon-code-text">RAMADAN</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('RAMADAN', this)">Копировать</button>
+                    </div>
+                </div>
+
+                <!-- Код 3 -->
+                <div class="promo-list-row">
+                    <div>
+                        <h4>DELAYBALL</h4>
+                        <p>Уникальный коллекционный меч</p>
+                    </div>
+                    <div class="action-zone">
+                        <div class="coupon-code-text">DELAYBALL</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('DELAYBALL', this)">Копировать</button>
+                    </div>
+                </div>
+
+                <!-- Код 4 -->
+                <div class="promo-list-row">
+                    <div>
+                        <h4>4BVISITS</h4>
+                        <p>Бонусный меч в инвентарь</p>
+                    </div>
+                    <div class="action-zone">
+                        <div class="coupon-code-text">4BVISITS</div>
+                        <button class="click-to-copy" onclick="runCopyProcess('4BVISITS', this)">Копировать</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -197,16 +236,21 @@
     </div>
 
     <script>
-        // База данных кодов прямо на сайте — работает без интернета и внешних API!
+        // Обновленная база данных на основе твоих актуальных скриншотов (Июль 2026)
         const localGamesDatabase = {
             genshin: [
-                { code: "GENSHINGIFT", reward: "60 Примогемов и 5 книжек опыта (Вечный код)" },
-                { code: "CA3BLB7F2S23", reward: "60 Примогемов и 5 единиц опыта искателя приключений" },
-                { code: "OLALALAND", reward: "10 000 Моры, 5 превосходной руды усиления" }
+                { code: "LEGEDILJKSGM", reward: "💎 60 Примогемов, 5 Опыта искателя приключений" },
+                { code: "CODENAMEK", reward: "✉️ Пригласительное письмо на бал маскарад (До 31 июля)" },
+                { code: "NMI20MAJGIBP", reward: "💎 20 Примогемов, 160 Гео-компасов" },
+                { code: "PFY1S40I88T9", reward: "💎 60 Примогемов, 5 Опыта искателя" },
+                { code: "YuanShen", reward: "💎 50 Примогемов, 3 Опыта героя (Вечный код)" }
             ],
             honkai: [
-                { code: "STARRAILGIFT", reward: "50 Звездного нефрита и 10 000 кредитов (Вечный код)" },
-                { code: "HSR10YEARS", reward: "100 Звездного нефрита в честь годовщины" }
+                { code: "OMEGA", reward: "🌌 60 Звездного нефрита, 1 Топливо" },
+                { code: "CREATIONNYMPH", reward: "🌌 60 Звездного нефрита, 1 Топливо" },
+                { code: "FAREWELL", reward: "🌌 60 Звездного нефрита, 1 Топливо" },
+                { code: "IFYOUAREREADINGTHIS", reward: "🌌 60 Звездного нефрита, 1 Топливо" },
+                { code: "STARRAILGIFT", reward: "🌌 50 Звездного нефрита, 10 000 Кредитов (Вечный код)" }
             ]
         };
 
@@ -223,17 +267,16 @@
                 event.currentTarget.classList.add('active');
             }
 
-            // Загружаем сохраненные коды для Hoyoverse игр
             if (sectionId === 'genshin' || sectionId === 'honkai') {
                 renderStaticGameCodes(sectionId);
             }
         }
 
-        // Вывод кодов на экран
+        // Вывод кодов Genshin / Honkai на экран
         function renderStaticGameCodes(gameType) {
             const boxId = gameType === 'genshin' ? 'genshin-data-loading-box' : 'honkai-data-loading-box';
             const displayBox = document.getElementById(boxId);
-            displayBox.innerHTML = ''; // Очищаем поле
+            displayBox.innerHTML = ''; 
 
             const currentCodes = localGamesDatabase[gameType];
 
